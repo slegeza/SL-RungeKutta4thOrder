@@ -1,0 +1,36 @@
+function fin = slrk4(t0, tMax, y0, h)
+%RK 4th-order method
+
+func = @(t, y) exp(t)*sin(y);
+
+tn =t0;
+tArr = [];
+yArr = [];
+tArr(1) = t0;
+yArr(1) = y0;
+
+while tn <= tMax
+    f0 = func(tn, y0);
+    f1 = func(tn+h/2,y0+h/2*f0);
+    f2 = func(tn+h/2,y0+h/2*f1);
+    f3 = func(tn+h,y0+h*f2);
+    
+    y0=y0 +h/6*(f0+2*f1+2*f2+f3);
+    
+    tArr = [tArr tn];
+    yArr = [yArr y0];
+    
+    %plot(tn, y0, 'b', 'LineWidth', 2)
+    tn = tn+h;
+    %hold on
+end
+    
+
+
+plot(tArr,yArr, 'Linewidth', 2)
+fin = yArr(length(yArr));
+plot(tArr,yArr, 'LineWidth', 2)
+xlabel("Time (s)")
+ylabel("y(t)")
+title("Runge-Kutta 4th Order, 0 to 5 seconds")
+hold on
